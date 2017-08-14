@@ -9,26 +9,8 @@ import PokemonDetail from './PokemonDetail';
 
 class ItemList extends Component {
     componentWillMount() {
-        /*var promise = new Promise(function(resolve, reject){
-            resolve();
-        });
-        var a = this.props.fetchData('http://pokeapi.co/api/v2/pokemon/1/');
-        var b = this.props.fetchEvolData('http://pokeapi.co/api/v2/pokemon-species/1/');
-        promise
-            .then(function(){
-                a;
-            })
-            .then(function(){
-                b;
-            })
-            .then(function(){
-                console.log("a");
-            });
-            .catch(function(){
-                console.log('Error!');
-            });*/
-        this.props.fetchData('http://pokeapi.co/api/v2/pokemon/2/');
-        this.props.fetchEvolData('http://pokeapi.co/api/v2/pokemon-species/2/');
+        this.props.fetchData('https://pokeapi.co/api/v2/pokemon/2/');
+        this.props.fetchEvolData('https://pokeapi.co/api/v2/pokemon-species/2/');
     }
 
     render() {

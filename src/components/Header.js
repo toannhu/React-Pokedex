@@ -13,8 +13,8 @@ const Header = (props) => {
                         const value = isNaN(evt.target.pokeNum.value) ?
                             evt.target.pokeNum.value.toLowerCase()
                             : evt.target.pokeNum.value;
-                        props.fetchData('http://pokeapi.co/api/v2/pokemon/' + value);
-                        props.fetchEvolData('http://pokeapi.co/api/v2/pokemon-species/' + value);
+                        props.fetchData('https://pokeapi.co/api/v2/pokemon/' + value);
+                        props.fetchEvolData('https://pokeapi.co/api/v2/pokemon-species/' + value);
                         evt.target.pokeNum.value = '';
                     }
                     }>

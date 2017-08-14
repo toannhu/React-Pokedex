@@ -15,18 +15,19 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy-storybook": "storybook-to-ghpages",
+    "deploy" : "npm run build&&gh-pages -d build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "@storybook/storybook-deployer": "^2.0.0",
     "eslint": "^4.4.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-node": "^5.1.1",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-react": "^7.1.0",
-    "eslint-plugin-standard": "^3.0.1"
-  }
+    "eslint-plugin-standard": "^3.0.1",
+    "gh-pages": "^1.0.0"
+  },
+  "homepage": "https://toannhu.github.io/React-Pokedex"
 }
