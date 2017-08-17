@@ -22,20 +22,56 @@ export function itemsFetchDataSuccess(items) {
 export function itemsFetchData(url) {
     return (dispatch) => {
         dispatch(itemsIsLoading(true));
-
-        fetch(url)
-            .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText);
+        if (typeof Storage !== 'undefined') {
+            let expiry = 30 * 60; // 30 min default
+            let cacheKey = url;
+            let cached = localStorage.getItem(cacheKey);
+            let whenCached = localStorage.getItem(cacheKey + ':ts');
+            if (cached !== null && whenCached !== null) {
+                let age = (Date.now() - whenCached) / 1000;
+                if (age < expiry) {                       
+                    dispatch(itemsFetchDataSuccess(JSON.parse(cached)));
+                    dispatch(itemsIsLoading(false));
+                    return;
                 }
+                else {
+                    localStorage.removeItem(cacheKey);
+                    localStorage.removeItem(cacheKey + ':ts');
+                }
+            }
 
-                dispatch(itemsIsLoading(false));
 
-                return response;
-            })
-            .then((response) => response.json())
-            .then((items) => dispatch(itemsFetchDataSuccess(items)))
-            .catch(() => dispatch(itemsHasErrored(true)));
+            return fetch(url)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw Error(response.statusText);
+                    }
+                    dispatch(itemsIsLoading(false));
+                    return response;
+                })
+                .then((response) => response.json())
+                .then((items) => { 
+                    dispatch(itemsFetchDataSuccess(items));
+                    localStorage.setItem(cacheKey, JSON.stringify(items));
+                    localStorage.setItem(cacheKey+':ts', Date.now());
+                })     
+                .catch(() => dispatch(itemsHasErrored(true)));
+        }
+        else {
+            return fetch(url)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw Error(response.statusText);
+                    }
+                    dispatch(itemsIsLoading(false));
+                    return response;
+                })
+                .then((response) => response.json())
+                .then((items) => {
+                    dispatch(itemsFetchDataSuccess(items));
+                })     
+                .catch(() => dispatch(itemsHasErrored(true)));
+        }
     };
 }
 
@@ -63,19 +99,54 @@ export function evolDataFetchDataSuccess(evolData) {
 export function evolDataFetchData(url) {
     return (dispatch) => {
         dispatch(evolDataIsLoading(true));
-
-        fetch(url)
-            .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText);
+        if (typeof Storage !== 'undefined') {
+            let expiry = 30 * 60; // 30 min default
+            let evolDataCacheKey = url;
+            let evolDataCached = localStorage.getItem(evolDataCacheKey);
+            let evolDataWhenCached = localStorage.getItem(evolDataCacheKey + ':ts');
+            if (evolDataCached !== null && evolDataWhenCached !== null) {
+                let age = (Date.now() - evolDataWhenCached) / 1000;
+                if (age < expiry) {      
+                    dispatch(evolDataFetchDataSuccess(JSON.parse(evolDataCached)));
+                    dispatch(evolDataIsLoading(false));
+                    return;
                 }
+                else {
+                    localStorage.removeItem(evolDataCacheKey);
+                    localStorage.removeItem(evolDataCacheKey + ':ts');
+                }
+            }
 
-                dispatch(evolDataIsLoading(false));
 
-                return response;
-            })
-            .then((response) => response.json())
-            .then((evolData) => dispatch(evolDataFetchDataSuccess(evolData)))
-            .catch(() => dispatch(evolDataHasErrored(true)));
+            return fetch(url)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw Error(response.statusText);
+                    }
+                    dispatch(evolDataIsLoading(false));
+                    return response;
+                })
+                .then((response) => response.json())
+                .then((items) => { 
+                    dispatch(evolDataFetchDataSuccess(items));
+                    localStorage.setItem(evolDataCacheKey, JSON.stringify(items));
+                    localStorage.setItem(evolDataCacheKey+':ts', Date.now());
+                })     
+                .catch(() => dispatch(evolDataHasErrored(true)));
+        }
+        else {
+
+            fetch(url)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw Error(response.statusText);
+                    }
+                    dispatch(evolDataIsLoading(false));
+                    return response;
+                })
+                .then((response) => response.json())
+                .then((evolData) => dispatch(evolDataFetchDataSuccess(evolData)))
+                .catch(() => dispatch(evolDataHasErrored(true)));
+        }
     };
 }

@@ -6,20 +6,43 @@ import { Image, Segment } from 'semantic-ui-react';
 import DimmerLoader from './DimmerLoader';
 import NotFound from './NotFound';
 import PokemonDetail from './PokemonDetail';
+import Header from './Header';
 
 class ItemList extends Component {
-    componentWillMount() {
-        this.props.fetchData('https://pokeapi.co/api/v2/pokemon/2/');
-        this.props.fetchEvolData('https://pokeapi.co/api/v2/pokemon-species/2/');
+    componentDidMount() {
+        this.props.fetchData('https://pokeapi.co/api/v2/pokemon/1');
+        this.props.fetchEvolData('https://pokeapi.co/api/v2/pokemon-species/1/');
+    }
+
+    componentDidUpdate (prevProps) {
+        let oldId = prevProps.Id;
+        let newId = this.props.Id;
+        if (isNaN(newId)) {
+            if (newId === undefined) {
+                newId = '1';
+            }
+            else {
+                newId = this.props.items.id;
+            }
+            this.props.history.replace('/pokemon/'+newId);
+        }
+        if (newId !== oldId) {        
+            if (newId === undefined) {
+                newId = '1';
+            }
+            this.props.fetchData('https://pokeapi.co/api/v2/pokemon/'+newId);
+            this.props.fetchEvolData('https://pokeapi.co/api/v2/pokemon-species/'+newId);
+        }
+
     }
 
     render() {
         if (this.props.hasErrored || this.props.evolDataHasErrored) {
-            return <div><NotFound/></div>;
+            return <div>Not Found 404</div>;
         }
 
         if (this.props.isLoading || this.props.evolDataIsLoading) {
-            return <div><DimmerLoader /></div>;
+            return <div><Header /><DimmerLoader /></div>;
         }
         const items = this.props.items;
         const evolData = this.props.evolData;
@@ -38,12 +61,15 @@ class ItemList extends Component {
                 {(() => {
                     if (hasDataReceived) {
                         return (
-                            <Segment.Group horizontal >
-                                <Segment basic ><Image src={sprites['front_default']} size="medium" centered/></Segment>
-                                <Segment basic >
-                                    <PokemonDetail />
-                                </Segment>
-                            </Segment.Group>
+                            <div>
+                                <Header history={this.props.history}/>
+                                <Segment.Group horizontal >
+                                    <Segment basic ><Image src={sprites['front_default']} size="medium" centered/></Segment>
+                                    <Segment basic >
+                                        <PokemonDetail />
+                                    </Segment>
+                                </Segment.Group>
+                            </div>
                         );}
                     else 
                         return (<div/>);
@@ -65,8 +91,9 @@ ItemList.propTypes = {
     fetchEvolData: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
     return {
+        Id: ownProps.match.params.Id,
         items: state.items,
         hasErrored: state.itemsHasErrored,
         isLoading: state.itemsIsLoading,

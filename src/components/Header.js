@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { itemsFetchData, evolDataFetchData } from '../actions/items';
+/*import history from '../store/history.js';*/
 
 const Header = (props) => {
     return (
@@ -13,13 +14,15 @@ const Header = (props) => {
                         const value = isNaN(evt.target.pokeNum.value) ?
                             evt.target.pokeNum.value.toLowerCase()
                             : evt.target.pokeNum.value;
+                        props.history.push('/pokemon/' + value);
                         props.fetchData('https://pokeapi.co/api/v2/pokemon/' + value);
                         props.fetchEvolData('https://pokeapi.co/api/v2/pokemon-species/' + value);
+                        
                         evt.target.pokeNum.value = '';
                     }
                     }>
                         <div className="form-group">
-                            <input autoComplete="off" className="form-control input-lg" name="pokeNum" placeholder="Enter Pokemon Number (Ex: 5) " />
+                            <input autoComplete="off" className="form-control input-lg" name="pokeNum" placeholder='Enter Pokemon Number (Eg: "1" or "Bulbasaur")' />
                         </div>
                         <button type="submit">Search</button>
                     </form>
