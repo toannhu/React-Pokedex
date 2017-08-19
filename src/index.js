@@ -1,19 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ItemList, Header, Footer } from './components';
+import { ItemList, Footer, NotFound } from './components';
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
 import { Route, Switch } from 'react-router';
-/*import configureStore from './store/configureStore';*/
 import createHistory from 'history/createBrowserHistory';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux';
+import 'semantic-ui-css/semantic.min.css';
 import './index.css';
-
-/*const store = configureStore();*/ // You can also pass in an initialState here
-/*const history = createHistory();*/
 
 const history = createHistory();
 
@@ -31,7 +28,7 @@ ReactDOM.render(
                 <Switch>
                     <Route exact path="/" component={ItemList}/>
                     <Route path="/pokemon/:Id" component={ItemList}/>
-                    {/*<Route component={NotFound}/>*/}
+                    <Route component={NotFound}/>
                 </Switch>
             </ConnectedRouter>
             <Footer />

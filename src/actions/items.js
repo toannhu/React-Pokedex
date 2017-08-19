@@ -21,6 +21,7 @@ export function itemsFetchDataSuccess(items) {
 
 export function itemsFetchData(url) {
     return (dispatch) => {
+        dispatch(itemsHasErrored(false));
         dispatch(itemsIsLoading(true));
         if (typeof Storage !== 'undefined') {
             let expiry = 30 * 60; // 30 min default

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { itemsFetchData, evolDataFetchData } from '../actions/items';
+import { itemsFetchData, evolDataFetchData, itemsHasErrored } from '../actions/items';
 import { Image, Segment } from 'semantic-ui-react';
-import DimmerLoader from './DimmerLoader';
 import NotFound from './NotFound';
+import DimmerLoader from './DimmerLoader';
 import PokemonDetail from './PokemonDetail';
 import Header from './Header';
+import Pagination from './Pagination';
 
 class ItemList extends Component {
     componentDidMount() {
@@ -27,23 +28,30 @@ class ItemList extends Component {
             this.props.history.replace('/pokemon/'+newId);
         }
         if (newId !== oldId) {        
-            if (newId === undefined) {
-                newId = '1';
-            }
             this.props.fetchData('https://pokeapi.co/api/v2/pokemon/'+newId);
             this.props.fetchEvolData('https://pokeapi.co/api/v2/pokemon-species/'+newId);
         }
-
+        else if (newId === oldId && parseInt(newId) !== this.props.items.id) {
+            this.props.fetchData('https://pokeapi.co/api/v2/pokemon/'+newId);
+        }
+        if (this.props.hasErrored || this.props.evolDataHasErrored) {
+            this.props.history.push('/not_found_404');
+        }
     }
 
     render() {
         if (this.props.hasErrored || this.props.evolDataHasErrored) {
-            return <div>Not Found 404</div>;
+            return (
+                <div>
+                    <NotFound /> 
+                </div>
+            );
         }
 
         if (this.props.isLoading || this.props.evolDataIsLoading) {
             return <div><Header /><DimmerLoader /></div>;
         }
+
         const items = this.props.items;
         const evolData = this.props.evolData;
         const hasDataReceived = Object.keys(items).length > 0 && Object.keys(evolData).length > 0 ;
@@ -64,11 +72,14 @@ class ItemList extends Component {
                             <div>
                                 <Header history={this.props.history}/>
                                 <Segment.Group horizontal >
-                                    <Segment basic ><Image src={sprites['front_default']} size="medium" centered/></Segment>
+                                    <Segment basic size="large" padded='very' textAlign='center' style={{ margin: '50px 0 30px 0' }}>
+                                        <Image src={sprites['front_default']} size="medium" verticalAlign='middle'/>
+                                    </Segment>
                                     <Segment basic >
-                                        <PokemonDetail />
+                                        <PokemonDetail items={this.props.items} evolData={this.props.evolData} />
                                     </Segment>
                                 </Segment.Group>
+                                <Pagination/>
                             </div>
                         );}
                     else 
@@ -106,7 +117,8 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         fetchData: (url) => dispatch(itemsFetchData(url)),
-        fetchEvolData: (url) => dispatch(evolDataFetchData(url))
+        fetchEvolData: (url) => dispatch(evolDataFetchData(url)),
+        itemsHasErrored: (bool) => dispatch(itemsHasErrored(bool))
     };
 };
 
