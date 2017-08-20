@@ -13,7 +13,7 @@ class Pagination extends Component {
         let pagination = (Id > 496) ? [497,498,499] : [Id, Id+1, Id+2];
         return (
             <div style={{ textAlign: 'center', padding: '10px 0 10px 0' }} >
-                <Menu tabular pagination borderless size='massive' style={{border: 'none'}}  >
+                <Menu tabular pagination borderless size='huge' style={{border: 'none'}}  >
                     <Menu.Item as='a' key="first" icon
                         name={1}
                         href={'/pokemon/1'}>

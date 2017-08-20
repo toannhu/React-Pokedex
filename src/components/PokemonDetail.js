@@ -18,10 +18,8 @@ const pokemonType = [
   { type: 'grass', text: 'Grass', color: 'green' },
   { type: 'electric', text: 'Electric', color: 'yellow' },
   { type: 'psychic', text: 'Psychic', color: '' },
-
   { type: 'ice', text: 'Ice', color: '' },
   { type: 'dragon', text: 'Dragon', color: '' },
-
   { type: 'dark', text: 'Dark', color: '' },
   { type: 'fairy', text: 'Fairy', color: '' },
   { type: '???', text: '???', color: '' }
@@ -29,7 +27,8 @@ const pokemonType = [
 ];
 
 const panes = (color, onTabClick, items, evolData) => { 
-    console.log(items)
+    console.log(items);
+    console.log(evolData['flavor_text_entries'][1]['flavor_text']);
     let type = [];
     items.types.slice().sort((a,b) => {return a.slot - b.slot }).map((slot)=>{
        type.push(pokemonType.filter( typeName => typeName['type'] === slot.type.name ))
@@ -120,6 +119,15 @@ const panes = (color, onTabClick, items, evolData) => {
                 </Tab.Pane>
             },
             { menuItem: <Menu.Item name='stats' onClick={onTabClick}><span style={{padding: '5px 23px 5px 23px'}}><font size="4" color={color[1]}>Stats</font></span></Menu.Item>, render: () => 
+                <Tab.Pane>
+                    <Segment basic size="huge" style={{margin: '-7px 0 -7px 0'}} children={<Label content="Type" size='huge'/>}></Segment>
+                    <Divider/>
+                    <Segment basic size="huge" style={{margin: '-7px 0 -7px 0'}} children={<Label content="Type" size='huge'/>}></Segment>
+                    <Divider />
+                    <Segment basic size="huge" style={{margin: '-7px 0 -7px 0'}} children={<Label content="Type" size='huge'/>}></Segment>
+                </Tab.Pane>
+            },
+            { menuItem: <Menu.Item name='stats' onClick={onTabClick}><span style={{padding: '5px 10px 5px 10px'}}><font size="4" color={color[1]}>Summary</font></span></Menu.Item>, render: () => 
                 <Tab.Pane>
                     <Segment basic size="huge" style={{margin: '-7px 0 -7px 0'}} children={<Label content="Type" size='huge'/>}></Segment>
                     <Divider/>

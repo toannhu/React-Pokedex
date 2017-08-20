@@ -15,13 +15,18 @@ const Header = (props) => {
                             const value = isNaN(evt.target.pokeNum.value) ?
                                 evt.target.pokeNum.value.toLowerCase()
                                 : parseInt(evt.target.pokeNum.value);
-                            if (value === '') {
+                            const pattern = new RegExp(/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?@()]/);
+                            if (value.length === undefined && isNaN(value)) {
+                                return;
+                            }
+                            else if (pattern.test(value.toString())) {
+                                evt.target.pokeNum.value = '';
                                 return;
                             }
                             else {
-                                props.history.push('/pokemon/' + value);
-                                props.fetchData('https://pokeapi.co/api/v2/pokemon/' + value);
-                                props.fetchEvolData('https://pokeapi.co/api/v2/pokemon-species/' + value);
+                                props.history.push('/pokemon/' + value.toString());
+                                props.fetchData('https://pokeapi.co/api/v2/pokemon/' + value.toString());
+                                props.fetchEvolData('https://pokeapi.co/api/v2/pokemon-species/' + value.toString());
                                 evt.target.pokeNum.value = '';
                             }
                         }
@@ -32,14 +37,14 @@ const Header = (props) => {
                             <button type="submit" 
                                 style={{backgroundColor: 'teal',
                                     border: '2px solid',
-                                    borderRadius: '4px',
+                                    borderRadius: '20px',
                                     color: 'white',
                                     padding: '15px 32px',
                                     textAlign: 'center',
                                     textDecoration: 'none',
                                     display: 'inline-block',
-                                    fontSize: '16px',
-                                    marginTop: '15px'
+                                    fontSize: '21',
+                                    marginTop: '15px',
                                 }}>Search</button>
                         </form>
                     </div>

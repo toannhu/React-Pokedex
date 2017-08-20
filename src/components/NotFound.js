@@ -7,6 +7,7 @@ const NotFound = () => {
             src='/not_found.jpg'
             as='a' fluid
             href='/'
+            centered
         />
     );
 };

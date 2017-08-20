@@ -21,13 +21,16 @@ export function itemsFetchDataSuccess(items) {
 
 export function itemsFetchData(url) {
     return (dispatch) => {
-        dispatch(itemsHasErrored(false));
         dispatch(itemsIsLoading(true));
         if (typeof Storage !== 'undefined') {
             let expiry = 30 * 60; // 30 min default
             let cacheKey = url;
             let cached = localStorage.getItem(cacheKey);
             let whenCached = localStorage.getItem(cacheKey + ':ts');
+            let storageSize = Math.round(JSON.stringify(localStorage).length / 1024);
+            if (storageSize > 5000) {
+                localStorage.clear();
+            }
             if (cached !== null && whenCached !== null) {
                 let age = (Date.now() - whenCached) / 1000;
                 if (age < expiry) {                       
@@ -105,6 +108,10 @@ export function evolDataFetchData(url) {
             let evolDataCacheKey = url;
             let evolDataCached = localStorage.getItem(evolDataCacheKey);
             let evolDataWhenCached = localStorage.getItem(evolDataCacheKey + ':ts');
+            let storageSize = Math.round(JSON.stringify(localStorage).length / 1024);
+            if (storageSize > 5000) {
+                localStorage.clear();
+            }
             if (evolDataCached !== null && evolDataWhenCached !== null) {
                 let age = (Date.now() - evolDataWhenCached) / 1000;
                 if (age < expiry) {      
