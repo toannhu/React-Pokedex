@@ -25,17 +25,17 @@ class ItemList extends Component {
             else {
                 newId = this.props.items.id;
             }
-            this.props.history.replace('/pokemon/'+newId);
+            this.props.history.replace(process.env.PUBLIC_URL + '/pokemon/' + newId);
         }
         if (newId !== oldId) {        
-            this.props.fetchData('https://pokeapi.co/api/v2/pokemon/'+newId);
-            this.props.fetchEvolData('https://pokeapi.co/api/v2/pokemon-species/'+newId);
+            this.props.fetchData('https://pokeapi.co/api/v2/pokemon/' + newId);
+            this.props.fetchEvolData('https://pokeapi.co/api/v2/pokemon-species/' + newId);
         }
         else if (newId === oldId && parseInt(newId) !== this.props.items.id) {
-            this.props.fetchData('https://pokeapi.co/api/v2/pokemon/'+newId);
+            this.props.fetchData('https://pokeapi.co/api/v2/pokemon/' + newId);
         }
         if (this.props.hasErrored || this.props.evolDataHasErrored) {
-            this.props.history.push('/not_found_404');
+            this.props.history.push(process.env.PUBLIC_URL + '/not_found_404');
         }
     }
 

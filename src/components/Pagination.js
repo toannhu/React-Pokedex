@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class Pagination extends Component {
-
     render() {
         const { items } = this.props;
         const Id = items.id;
@@ -16,12 +15,12 @@ class Pagination extends Component {
                 <Menu tabular pagination borderless size='huge' style={{border: 'none'}}  >
                     <Menu.Item as='a' key="first" icon
                         name={1}
-                        href={'/pokemon/1'}>
+                        href={process.env.PUBLIC_URL + '/pokemon/1'}>
                         <Icon name='angle double left' />
                     </Menu.Item>
                     <Menu.Item as='a' key="second" icon
                         name={prevId}
-                        href={`/pokemon/${prevId}`}>
+                        href={process.env.PUBLIC_URL + `/pokemon/${prevId}`}>
                         <Icon name='angle left' />
                     </Menu.Item>
                     {
@@ -29,18 +28,18 @@ class Pagination extends Component {
                             <Menu.Item as='a'
                                 active={pageNumber === Id}
                                 name={pageNumber}
-                                href={`/pokemon/${pageNumber}`}
+                                href={process.env.PUBLIC_URL + `/pokemon/${pageNumber}`}
                             >{pageNumber}</Menu.Item>)
                         )
                     }
                     <Menu.Item as='a' key="second last" icon
                         name={nextId}
-                        href={`/pokemon/${nextId}`}>
+                        href={process.env.PUBLIC_URL + `/pokemon/${nextId}`}>
                         <Icon name='angle right' />
                     </Menu.Item>
                     <Menu.Item as='a' key="last" icon
                         name={499}
-                        href={'/pokemon/499'}>
+                        href={process.env.PUBLIC_URL + '/pokemon/499'}>
                         <Icon name='angle double right' />
                     </Menu.Item>
                 </Menu>

@@ -6,7 +6,7 @@ export default class Footer extends Component {
         return (
             <Segment.Group>
                 <Segment padded='very' textAlign='center'> 
-                    <div class="fb-comments" data-href="https://toannhu.github.io/React-Pokedex/" data-numposts="5"></div>
+                    {/*<div class="fb-comments" data-href="https://toannhu.github.io/React-Pokedex/" data-numposts="5"></div>*/}
                 </Segment>
                 <Segment padded='very' textAlign='center'>         
                     <div style={{fontSize: '14px'}}>

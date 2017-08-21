@@ -26,9 +26,9 @@ ReactDOM.render(
         <div>
             <ConnectedRouter history={history}>
                 <Switch>
-                    <Route exact path="/" component={ItemList}/>
-                    <Route path="/pokemon/:Id" component={ItemList}/>
-                    <Route component={NotFound}/>
+                    <Route exact path={process.env.PUBLIC_URL + '/'} component={ItemList}/>
+                    <Route path={process.env.PUBLIC_URL + '/pokemon/:Id'} component={ItemList}/>
+                    <Route path={process.env.PUBLIC_URL + '/not_found_404'} component={NotFound}/>
                 </Switch>
             </ConnectedRouter>
             <Footer />

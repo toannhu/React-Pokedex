@@ -24,7 +24,7 @@ const Header = (props) => {
                                 return;
                             }
                             else {
-                                props.history.push('/pokemon/' + value.toString());
+                                props.history.push(process.env.PUBLIC_URL + '/pokemon/' + value.toString());
                                 props.fetchData('https://pokeapi.co/api/v2/pokemon/' + value.toString());
                                 props.fetchEvolData('https://pokeapi.co/api/v2/pokemon-species/' + value.toString());
                                 evt.target.pokeNum.value = '';
