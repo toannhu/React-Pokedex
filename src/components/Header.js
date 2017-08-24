@@ -15,7 +15,7 @@ const Header = (props) => {
                             const value = isNaN(evt.target.pokeNum.value) ?
                                 evt.target.pokeNum.value.toLowerCase()
                                 : parseInt(evt.target.pokeNum.value);
-                            const pattern = new RegExp(/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?@()]/);
+                            const pattern = new RegExp(/[~`!#$%\^&*+=\-\[\]\\';,./{}|\\":<>\?@()]/);
                             if (value.length === undefined && isNaN(value)) {
                                 return;
                             }

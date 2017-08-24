@@ -85,7 +85,7 @@ const panes = (color, onTabClick, items, evolData) => {
                             </Grid.Column>
                             <Grid.Column floated='right' width={10}>
                                 {
-                                    <p style={{fontWeight: 'bolder', fontSize: 'large', color: 'grey', marginTop: '4px'}}>{items.weight/100} m</p>
+                                    <p style={{fontWeight: 'bolder', fontSize: 'large', color: 'grey', marginTop: '4px'}}>{items.height/10} m</p>
                                 }
                             </Grid.Column>
                         </Grid>
@@ -98,7 +98,7 @@ const panes = (color, onTabClick, items, evolData) => {
                             </Grid.Column>
                             <Grid.Column floated='right' width={10}>
                                 {
-                                    <p style={{fontWeight: 'bolder', fontSize: 'large', color: 'grey', marginTop: '4px'}}>{items.height} kg</p>
+                                    <p style={{fontWeight: 'bolder', fontSize: 'large', color: 'grey', marginTop: '4px'}}>{items.weight/10} kg</p>
                                 }
                             </Grid.Column>
                         </Grid>

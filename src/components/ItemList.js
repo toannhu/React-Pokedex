@@ -36,6 +36,7 @@ class ItemList extends Component {
         }
         if (this.props.hasErrored || this.props.evolDataHasErrored) {
             this.props.history.push(process.env.PUBLIC_URL + '/not_found_404');
+            //dispatch(ItemhasErrored(false))
         }
     }
 
